@@ -18,9 +18,9 @@
     </section>
     <section class="pt-3">
         <div class="container">
-            <div class="row pb-2">
+            <div class="row pb-3">
                 <div class="col-xl-12">
-                    <div class="card">
+                    <div class="card shadow-sm">
                         <div class="card-header">
                             {{ __('เพิ่มรายรับอย่างไว') }}
                         </div>
@@ -30,22 +30,22 @@
                                 <div class="form-row">
                                     <div class="col-xl-3">
                                         <label for="">{{ __('ชื่อรายการ') }}</label>
-                                        <input type="text" class="form-control form-control-sm" name="name_revenue_add" id="" placeholder="ชื่อรายการ" required>
+                                        <input type="text" class="form-control form-control-sm" name="name" id="" placeholder="ชื่อรายการ" required>
                                     </div>
                                     <div class="col-xl-3">
                                         <label for="">{{ __('รายละเอียด') }}</label>
-                                        <input type="text" class="form-control form-control-sm" name="content_revenue_add" id="" placeholder="รายละเอียด" required>
+                                        <input type="text" class="form-control form-control-sm" name="content" id="" placeholder="รายละเอียด" required>
                                     </div>
                                     <div class="col-xl-2">
                                         <label for="">{{ __('จำนวนเงิน') }}</label>
-                                        <input type="number" min="0" maxlength="10" class="form-control form-control-sm" name="price_revenue_add" id="" placeholder="99999" required>
+                                        <input type="number" min="0" maxlength="10" class="form-control form-control-sm" name="price" id="" placeholder="00000.00" required>
                                     </div>
                                     <div class="col-xl-2">
                                         <label for="">{{ __('หมวดหมู่') }}</label>
-                                        <select name="category_revenue_add" id="" class="form-control form-control-sm" required>
-                                            <option>{{ __('กรุณาเลือกหมวดหมู่') }}</option>
-                                            @foreach ($revenue_select as $category_list)
-                                            <option value="{{ $category_list->id }}">{{ $category_list->name }}</option>
+                                        <select name="category_id" id="" class="form-control form-control-sm" required>
+                                            <option value="0">{{ __('กรุณาเลือกหมวดหมู่') }}</option>
+                                            @foreach ($category_revenue as $categorys)
+                                            <option value="{{ $categorys->id }}">{{ $categorys->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -62,30 +62,35 @@
             </div>
             <div class="row">
                 <div class="col-xl-12">
-                    <div class="card">
+                    <div class="card shadow">
                         <div class="card-header">
                             {{ __('Revenue') }}
                         </div>
                         <div class="card-body">
-                            <table class="table">
+                            <table id="revenueTable" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
+                                        <th class="text-center">ลำดับ</th>
+                                        <th class="text-center">ประเภท</th>
+                                        <th>ชื่อ</th>                                        
+                                        <th class="text-center">จำนวนเงิน</th>
+                                        <th class="text-center">วันที่</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                    @if (count($revenue_select) > 0)
-                                        @foreach ($revenue_select as $item)
+                                        @foreach ($revenue_select as $revenue)
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td class="text-center">{{ $count++ }}</td>
+                                            <td>{{ $revenue->category->name }}</td>
+                                            <td><a href="{{ url('revenue/'.$revenue->id) }}">{{ $revenue->name }}</a></td>                                            
+                                            <td class="text-right">{{ number_format($revenue->price, 2,'.',',') }}{{ __(' บาท') }}</td>
+                                            <td class="text-center">{{ $revenue->created_at }}</td>
+                                            <td class="text-center">
+                                                <a href="" class="btn btn-sm"><i class="far fa-edit"></i></a>
+                                                <a href="" class="btn btn-sm"><i class="far fa-trash-alt"></i></a>    
+                                            </td>                                            
                                         </tr>
                                         @endforeach
                                    @else
@@ -104,5 +109,9 @@
 @endsection
 
 @section('inputjavascript')
-    
+    <script>
+        $(document).ready( function () {
+            $('#revenueTable').DataTable();
+        } );
+    </script>
 @endsection

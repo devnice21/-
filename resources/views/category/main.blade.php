@@ -20,7 +20,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-12">
-                    <div class="card">
+                    <div class="card shadow">
                         <div class="card-header">
                             {{ __('Category : ').$status }}
                         </div>
@@ -30,20 +30,22 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
+                                                <th class="text-center">ลำดับ</th>
+                                                <th class="text-center">ชื่อ</th>
+                                                <th class="text-center">วันที่</th>
+                                                <th class="text-center"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         @if (count($category_show) > 0)
-                                            @foreach ($category_show as $item)
+                                            @foreach ($category_show as $category)
                                             <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <td class="text-center">{{ $count++ }}</td>
+                                                <td>{{ $category->name }}</td>
+                                                <td class="text-center">{{ $category->created_at }}</td>
+                                                <td class="text-center">
+                                                    <a href=""><i class="far fa-trash-alt"></i></a>
+                                                </td>
                                             </tr>  
                                             @endforeach
                                         @else  
@@ -55,17 +57,21 @@
                                     </table>
                                 </div>
                                 <div class="col-xl-4">
-                                    <form action="{{ url('/') }}" method="post">
+                                    <form action="{{ url('/category') }}" method="post">
                                         @csrf
                                         <div class="form-row pb-3">
                                             <div class="col-xl-12">
                                                 <label for="">{{ __('ชื่อหมวดหมู่') }}</label>
-                                                <input type="text" name="" id="" class="form-control form-control-sm" placeholder="หมวดหมู่" required>
+                                                <input type="text" name="name" id="" class="form-control form-control-sm" placeholder="หมวดหมู่" required>
                                             </div>
                                         </div>
                                         <div class="form-row">
-                                            <div class="col-xl-12">
-                                                <input type="submit" value="เพิ่มหมวดหมู่" class="btn btn-sm btn-block btn-info shadow-sm">
+                                            <div class="col-xl-12 text-center">
+                                                <input type="hidden" name="users_id" value="{{ Auth::user()->id }}">
+                                                <input type="hidden" name="status" value="{{ $status }}">
+                                                <input type="submit" value="เพิ่มหมวดหมู่" class="btn btn-sm btn-info shadow-sm">
+                                                <input type="reset" value="ล้างค่าทั้งหมด" class="btn btn-sm btn-danger shadow-sm">
+                                                
                                             </div>
                                         </div>
                                     </form>
@@ -80,5 +86,9 @@
 @endsection
 
 @section('inputjavascript')
-    
+    <script>
+        $(document).ready( function () {
+            $('#expenditureTable').DataTable();
+        } );
+    </script>   
 @endsection

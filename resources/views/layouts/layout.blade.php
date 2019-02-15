@@ -16,6 +16,9 @@
     <!-- fontawesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     
+    <!-- datatables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+
     <!-- Input CSS -->
     @yield('inputcss')
 
@@ -56,7 +59,7 @@
                             <div class="dropdown-menu" aria-labelledby="revenueDropdown">
                                 <a class="dropdown-item" href="{{ url('/revenue') }}">{{ __('รายการทั้งหมด') }}</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{ url('/revenue/create') }}">{{ __('เพิ่มรายรับ') }}</a>
+                                <a class="dropdown-item" href="{{ url('/revenue/new') }}">{{ __('เพิ่มรายรับ') }}</a>
                                 <a class="dropdown-item" href="{{ url('/category/revenue') }}">{{ __('เพิ่มหมวดหมู่') }}</a>
                             </div>
                         </li>
@@ -67,7 +70,7 @@
                             <div class="dropdown-menu" aria-labelledby="expenditureDropdown">
                                 <a class="dropdown-item" href="{{ url('/expenditure') }}">{{ __('รายการทั้งหมด') }}</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{ url('/expenditure/create') }}">{{ __('เพิ่มรายจ่าย') }}</a>
+                                <a class="dropdown-item" href="{{ url('/expenditure/new') }}">{{ __('เพิ่มรายจ่าย') }}</a>
                                 <a class="dropdown-item" href="{{ url('/category/expenditure') }}">{{ __('เพิ่มหมวดหมู่') }}</a>
                             </div>
                         </li>
@@ -113,11 +116,16 @@
         </nav>
         @yield('main')
     </div>
-    <!-- Optional JavaScript -->
-    @yield('inputjavascript')
+    
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    
+    <!-- Optional JavaScript -->
+    <script src="https//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    @yield('inputjavascript')
+    
   </body>
 </html>

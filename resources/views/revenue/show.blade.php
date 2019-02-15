@@ -11,6 +11,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ url('/home') }}">{{ __('หน้าแรก') }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url('/revenue') }}">{{ __('รายรับ') }}</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{ __('รายจ่ายทั้งหมด ') }}</li>
                 </ol>
             </nav>
@@ -25,7 +26,11 @@
 
                         </div>
                         <div class="card-body">
-                            
+                            @if (count($revenue_show) > 0)
+                                @foreach ($revenue_show as $show)
+                                    {{ $show }} <br>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>

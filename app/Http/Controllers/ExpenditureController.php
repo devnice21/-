@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Expenditure;
+use App\Category;
 
 class ExpenditureController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,9 +20,12 @@ class ExpenditureController extends Controller
     public function index()
     {
         //
-        $expenditure_select = Expenditure::all()->toArray();
+        $expenditure_select = Expenditure::all();
+        $category_select = Category::all()->where('status', '=', 'expenditure');
         return view('expenditure.main', [
-            'expenditure_select' => $expenditure_select
+            'expenditure_select' => $expenditure_select,
+            'category_expenditure' => $category_select,
+            'count' => 1
         ]);
     }
 
@@ -41,6 +49,20 @@ class ExpenditureController extends Controller
     public function store(Request $request)
     {
         //
+        $input['users_id'] = $request->users_id;
+        $input['category_id'] = $request->category_id;
+        $input['image'] = 'images/noimage.png';
+        if($file = $request->file('photo')){
+            $name = time().$file->getClientOriginalName();
+            $file->move('images/uploads/images',$name);
+            $icon = Expenditure::create(['name' => $name]);
+            $input['image'] = $icon->id;
+        }
+        $input['name'] = $request->name;
+        $input['content'] = $request->content;
+        $input['price']  = $request->price;
+        Expenditure::create($input);
+        return redirect('/expenditure')->with('success', 'เพิ่ม รายจ่าย เรียบร้อย');
     }
 
     /**
@@ -52,8 +74,8 @@ class ExpenditureController extends Controller
     public function show($id)
     {
         //
-        $expenditure_select = Expenditure::all()->toArray();
-        return view('expenditure.show', compact($expenditure_select));
+        $expenditure_show = Expenditure::where('id', '=', $id)->get();
+        return view('expenditure.show', ['expenditure_show'=>$expenditure_show]);
     }
 
     /**
